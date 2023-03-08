@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Componete de mensagem</p>
+    <Message v-bind:msg="msg" v-show="msg" />
   </div>
   <div>
     <form id="burguer-form" @submit="createBurguer">
@@ -65,6 +65,7 @@
 
 <script>
 import axios from "axios";
+import Message from "./Message.vue";
 export default {
   name: "BurguerForm",
 
@@ -110,16 +111,23 @@ export default {
       });
 
       if (req) {
-        this.name = "",
-        this.meat = "",
-        this.bread = "",
-        this.options = ""
-      }
+        this.msg = "Pedido realizado com sucesso";
 
+        (this.name = ""),
+          (this.meat = ""),
+          (this.bread = ""),
+          (this.options = "");
+
+        setTimeout(() => (this.msg = ""), 3000);
+      }
     },
   },
   mounted() {
     this.getIngredients();
+  },
+
+  components: {
+    Message,
   },
 };
 </script>

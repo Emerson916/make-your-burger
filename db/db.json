@@ -124,6 +124,21 @@
       ],
       "status": "Solicitado",
       "id": 5
+    },
+    {
+      "nome": "Edy",
+      "carne": "Alcatra",
+      "pao": "Integral",
+      "opcionais": [
+        "Bacon",
+        "Salame",
+        "Cebola roxa",
+        "Tomate",
+        "Cheddar",
+        "Pepino"
+      ],
+      "status": "Solicitado",
+      "id": 6
     }
   ]
 }
