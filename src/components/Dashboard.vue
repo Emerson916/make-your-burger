@@ -1,5 +1,5 @@
 <template>
-  <div id="burger-table" v-if="burgers">
+  <div id="burger-table" v-if="burguers">
     <div>
       <div id="burger-table-heading">
         <div class="order-id">#:</div>
@@ -11,13 +11,13 @@
       </div>
     </div>
     <div id="burger-table-rows">
-      <div class="burger-table-row" v-for="burger in burgers" :key="burger.id">
-        <div class="order-number">{{ burger.id }}</div>
-        <div>{{ burger.nome }}</div>
-        <div>{{ burger.pao }}</div>
-        <div>{{ burger.carne }}</div>
+      <div class="burger-table-row" v-for="burguer in burguers" :key="burguer.id">
+        <div class="order-number">{{ burguer.id }}</div>
+        <div>{{ burguer.nome }}</div>
+        <div>{{ burguer.pao }}</div>
+        <div>{{ burguer.carne }}</div>
         <div>
-          <ul v-for="(opcional, index) in burger.opcionais" :key="index">
+          <ul v-for="(opcional, index) in burguer.opcionais" :key="index">
             <li>{{ opcional }}</li>
           </ul>
         </div>
@@ -25,18 +25,12 @@
           <select
             name="status"
             class="status"
-            @change="updateBurger($event, burger.id)"
           >
-            <option
-              :value="s.tipo"
-              v-for="s in status"
-              :key="s.id"
-              :selected="burger.status == s.tipo"
-            >
-              {{ s.tipo }}
+            <option>
+              teste
             </option>
           </select>
-          <button class="delete-btn" @click="deleteBurger(burger.id)">
+          <button class="delete-btn" @click="deleteBurger(burguer.id)">
             Cancelar
           </button>
         </div>
@@ -51,6 +45,27 @@
 <script>
 export default {
   name: "Dashboard",
+  data() {
+    return {
+      burguers: null,
+      burguers_id: null,
+      status: [],
+    };
+  },
+
+  methods: {
+    async getPedidos() {
+      const req = await axios.get("http://localhost:3000/burguers");
+
+      const data = await req.json();
+
+      this.burguers = data;
+    },
+  },
+
+  mounted() {
+    this.getPedidos();
+  },
 };
 </script>
 
