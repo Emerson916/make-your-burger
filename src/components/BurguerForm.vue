@@ -3,7 +3,7 @@
     <p>Componete de mensagem</p>
   </div>
   <div>
-    <form id="burguer-form">
+    <form id="burguer-form" @submit="createBurguer">
       <div class="input-container">
         <label for="name">Nome do cliente:</label>
         <input
@@ -42,14 +42,18 @@
       </div>
       <div id="options-container" class="input-container">
         <label id="options-title" for="options">Selecione os opcionais:</label>
-        <div class="checkbox-container" v-for="optionsItens in optionsData" v-bind:key="optionsItens.id"> 
+        <div
+          class="checkbox-container"
+          v-for="optionsItens in optionsData"
+          v-bind:key="optionsItens.id"
+        >
           <input
             type="checkbox"
             name="options"
             v-model="options"
             v-bind:value="optionsItens.tipo"
           />
-          <span>{{optionsItens.tipo}}</span>
+          <span>{{ optionsItens.tipo }}</span>
         </div>
       </div>
       <div class="input-container">
@@ -87,6 +91,31 @@ export default {
           (this.meatData = response.data.meatData),
           (this.optionsData = response.data.optionsData);
       });
+    },
+
+    async createBurguer(e) {
+      e.preventDefault();
+      const data = {
+        nome: this.name,
+        carne: this.meat,
+        pao: this.bread,
+        opcionais: Array.from(this.options),
+        status: "Solicitado",
+      };
+
+      const dataJson = JSON.stringify(data);
+
+      const req = await axios.post("http://localhost:3000/burguers", dataJson, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (req) {
+        this.name = "",
+        this.meat = "",
+        this.bread = "",
+        this.options = ""
+      }
+
     },
   },
   mounted() {
