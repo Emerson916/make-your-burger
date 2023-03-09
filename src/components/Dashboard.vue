@@ -26,13 +26,17 @@
           </ul>
         </div>
         <div>
-          <select name="status" class="status">
+          <select
+            name="status"
+            class="status"
+            @change="updatedBurguer($event, burguer.id)"
+          >
             <option value="">Selecione</option>
             <option
               :selected="burguer.status == status.tipo"
               v-for="status in status"
               :key="status.id"
-              value="status.tipo"
+              :value="status.tipo"
             >
               {{ status.tipo }}
             </option>
@@ -79,6 +83,14 @@ export default {
       await axios.delete(`http://localhost:3000/burguers/${burguer_id}`);
 
       this.getPedidos();
+    },
+
+    async updatedBurguer(event, burguer_id) {
+      const value = event.target.value;
+
+      await axios.patch(`http://localhost:3000/burguers/${burguer_id}`, {
+        status: value,
+      });
     },
   },
 

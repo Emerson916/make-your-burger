@@ -87,8 +87,14 @@
         "Salame",
         "Cebola roxa"
       ],
-      "status": "Solicitado",
-      "id": 2
+      "status": "Finalizado",
+      "id": 2,
+      "dataJson": {
+        "status": "Em produção"
+      },
+      "{}": "",
+      "{\"status\":{\"isTrusted\":true,\"_vts\":1678362969201}}": "",
+      "{\"status\":\"Em produção\"}": ""
     }
   ]
 }
