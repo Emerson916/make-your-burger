@@ -1,5 +1,6 @@
 <template>
   <div id="burger-table" v-if="burguers">
+    <Message :msg="msg" v-show="msg" />
     <div>
       <div id="burger-table-heading">
         <div class="order-id">#:</div>
@@ -55,6 +56,7 @@
 
 <script>
 import axios from "axios";
+import Message from "./Message.vue";
 
 export default {
   name: "Dashboard",
@@ -63,7 +65,11 @@ export default {
       burguers: null,
       burguers_id: null,
       status: [],
+      msg: "",
     };
+  },
+  components: {
+    Message,
   },
 
   methods: {
@@ -80,7 +86,14 @@ export default {
     },
 
     async deleteBurguer(burguer_id) {
-      await axios.delete(`http://localhost:3000/burguers/${burguer_id}`);
+      const res = await axios.delete(
+        `http://localhost:3000/burguers/${burguer_id}`
+      );
+
+      if (res) {
+        this.msg = `Pedido removido com sucesso`;
+        setTimeout(() => (this.msg = ""), 3000);
+      }
 
       this.getPedidos();
     },
@@ -88,9 +101,14 @@ export default {
     async updatedBurguer(event, burguer_id) {
       const value = event.target.value;
 
-      await axios.patch(`http://localhost:3000/burguers/${burguer_id}`, {
+      const res = await axios.patch(`http://localhost:3000/burguers/${burguer_id}`, {
         status: value,
       });
+
+      if (res) {
+        this.msg = `Pedido atualizado com sucesso para ${res.data.status}!`;
+        setTimeout(() => (this.msg = ""), 3000);
+      }
     },
   },
 
