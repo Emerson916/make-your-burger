@@ -11,7 +11,11 @@
       </div>
     </div>
     <div id="burger-table-rows">
-      <div class="burger-table-row" v-for="burguer in burguers" :key="burguer.id">
+      <div
+        class="burger-table-row"
+        v-for="burguer in burguers"
+        :key="burguer.id"
+      >
         <div class="order-number">{{ burguer.id }}</div>
         <div>{{ burguer.nome }}</div>
         <div>{{ burguer.pao }}</div>
@@ -22,13 +26,8 @@
           </ul>
         </div>
         <div>
-          <select
-            name="status"
-            class="status"
-          >
-            <option>
-              teste
-            </option>
+          <select name="status" class="status">
+            <option>teste</option>
           </select>
           <button class="delete-btn" @click="deleteBurger(burguer.id)">
             Cancelar
@@ -43,6 +42,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Dashboard",
   data() {
@@ -57,9 +58,7 @@ export default {
     async getPedidos() {
       const req = await axios.get("http://localhost:3000/burguers");
 
-      const data = await req.json();
-
-      this.burguers = data;
+      this.burguers = req.data;
     },
   },
 
