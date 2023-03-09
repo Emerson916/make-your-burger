@@ -37,7 +37,7 @@
               {{ status.tipo }}
             </option>
           </select>
-          <button class="delete-btn" @click="deleteBurger(burguer.id)">
+          <button class="delete-btn" @click="deleteBurguer(burguer.id)">
             Cancelar
           </button>
         </div>
@@ -73,6 +73,12 @@ export default {
       const req = await axios.get("http://localhost:3000/status");
 
       this.status = req.data;
+    },
+
+    async deleteBurguer(burguer_id) {
+      await axios.delete(`http://localhost:3000/burguers/${burguer_id}`);
+
+      this.getPedidos();
     },
   },
 
