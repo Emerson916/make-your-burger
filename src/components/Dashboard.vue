@@ -27,7 +27,15 @@
         </div>
         <div>
           <select name="status" class="status">
-            <option>teste</option>
+            <option value="">Selecione</option>
+            <option
+              :selected="burguer.status == status.tipo"
+              v-for="status in status"
+              :key="status.id"
+              value="status.tipo"
+            >
+              {{ status.tipo }}
+            </option>
           </select>
           <button class="delete-btn" @click="deleteBurger(burguer.id)">
             Cancelar
@@ -60,10 +68,17 @@ export default {
 
       this.burguers = req.data;
     },
+
+    async getStatus() {
+      const req = await axios.get("http://localhost:3000/status");
+
+      this.status = req.data;
+    },
   },
 
   mounted() {
     this.getPedidos();
+    this.getStatus();
   },
 };
 </script>
